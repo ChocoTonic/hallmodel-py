@@ -1,4 +1,8 @@
 version: 2
+# Single designated dep-bump flow per ecosystem. Dependabot covers both
+# GitHub Actions versions and Python deps (uv.lock-aware). There is
+# deliberately no custom bump-deps workflow alongside this — Dependabot
+# is the only thing that opens "bump <dep>" PRs in this repo.
 updates:
   - package-ecosystem: github-actions
     directory: /
@@ -6,3 +10,16 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      python:
+        patterns: ["*"]
