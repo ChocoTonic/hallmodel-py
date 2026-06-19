@@ -34,7 +34,7 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["bw_cpp"]
+packages = ["bw_cpp", "hallmodel"]
 
 # cibuildwheel: build wheels for Linux x86_64 + macOS arm64, Py 3.10-3.13.
 # Skip musllinux + PyPy to keep CI under 5 minutes.

@@ -1,0 +1,12 @@
+# Bundle the C++ kernel sources from the hallmodel-core submodule into the
+# sdist so `pip install hallmodel` can build a wheel from source on any
+# platform (Windows, unsupported Linux arches, future Python versions) even
+# when no prebuilt wheel matches.
+recursive-include bindings *.cpp
+recursive-include external/hallmodel-core/src *.cpp
+recursive-include external/hallmodel-core/include *.hpp
+include external/hallmodel-core/LICENSE
+include external/hallmodel-core/LICENSE.md
+include README.md
+include LICENSE
+include LICENSE.md

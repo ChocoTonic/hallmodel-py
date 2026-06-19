@@ -29,7 +29,7 @@ ext_modules = [
 setup(
     name="hallmodel",
     version="0.1.0",
-    packages=["bw_cpp"],
+    packages=["bw_cpp", "hallmodel"],
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},
     zip_safe=False,
