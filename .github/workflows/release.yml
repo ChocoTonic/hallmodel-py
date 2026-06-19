@@ -79,7 +79,7 @@ jobs:
           open(p, 'w').write(src)
           "
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.2
+        uses: pypa/cibuildwheel@v4.1
       - uses: actions/upload-artifact@v5
         with:
           name: wheels-${{ matrix.name }}
