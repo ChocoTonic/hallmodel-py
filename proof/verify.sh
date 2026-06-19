@@ -2,10 +2,8 @@
 # verify.sh — build the binding, run every contract case through bw_cpp,
 # and assert parity via the contract's own compare.py.
 #
-# Identical proof methodology to hallmodel-core/proof/verify.sh, but the
-# kernel is reached through the pybind11 binding rather than driven directly
-# from C++. A green run here means: (a) the pinned hallmodel-core submodule
-# still passes parity, and (b) the binding does not introduce any drift.
+# Uses uv to manage the build environment so the proof is reproducible
+# regardless of the caller's Python state.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
@@ -13,27 +11,19 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." >/dev/null 2>&1 && pwd)"
 CORE="$REPO_ROOT/external/hallmodel-core"
 OUT_DIR="$SCRIPT_DIR/outputs"
 LOG="$SCRIPT_DIR/last_run.log"
-VENV="$REPO_ROOT/build/.verify-venv"
-
-# Use an ephemeral venv so the proof is reproducible regardless of the
-# caller's Python environment (handles PEP 668 externally-managed Pythons).
-if [[ ! -d "$VENV" ]]; then
-    python3 -m venv "$VENV"
-    "$VENV/bin/pip" install --quiet --upgrade pip pybind11 numpy
-fi
-PY="$VENV/bin/python3"
-PIP="$VENV/bin/pip"
 
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
+cd "$REPO_ROOT"
+
 {
   echo "----- hallmodel-py parity verification -----"
-  echo "date:          $(date -u +%FT%TZ)"
-  echo "host:          $(uname -srm)"
-  echo "python:        $($PY --version)"
+  echo "date:               $(date -u +%FT%TZ)"
+  echo "host:               $(uname -srm)"
+  echo "uv:                 $(uv --version 2>/dev/null || echo 'not installed')"
   echo "core submodule sha: $(git -C "$CORE" rev-parse HEAD)"
-  echo "repo:          $REPO_ROOT"
+  echo "repo:               $REPO_ROOT"
   echo
 
   if [[ ! -e "$CORE/contract/cases.json" ]]; then
@@ -41,12 +31,18 @@ mkdir -p "$OUT_DIR"
     exit 2
   fi
 
-  echo "----- installing bw_cpp -----"
-  "$PIP" install -e "$REPO_ROOT" --quiet
+  if ! command -v uv >/dev/null; then
+    echo "ERROR: uv not installed. See https://docs.astral.sh/uv/" >&2
+    exit 2
+  fi
+
+  echo "----- syncing deps + building extension -----"
+  uv sync
+  uv pip install -e . --quiet
 
   echo
   echo "----- driving cases through bw_cpp -----"
-  "$PY" - "$CORE/contract/cases.json" "$OUT_DIR" <<'PY'
+  uv run python - "$CORE/contract/cases.json" "$OUT_DIR" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -82,7 +78,7 @@ PY
   echo "----- comparing against contract/golden -----"
   # Same --skip BMI_Category exclusion as hallmodel-core/proof/verify.sh — see
   # that file for the upstream-coercion-artifact explanation.
-  "$PY" "$CORE/contract/compare.py" "$OUT_DIR" \
+  uv run python "$CORE/contract/compare.py" "$OUT_DIR" \
       --golden "$CORE/contract/golden" \
       --skip BMI_Category
   echo

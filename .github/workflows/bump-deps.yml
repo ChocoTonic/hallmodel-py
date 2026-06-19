@@ -1,0 +1,39 @@
+name: bump-deps
+
+# Weekly: `uv lock --upgrade` and open a PR if anything changed. The PR's
+# CI run is the gate that proves the upgrade is safe.
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: bump-deps
+  cancel-in-progress: true
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@v3
+      - name: uv lock --upgrade
+        run: uv lock --upgrade
+      - name: Open PR if lockfile changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: bump/deps
+          title: "deps: weekly uv lock --upgrade"
+          commit-message: "deps: weekly uv lock --upgrade"
+          body: |
+            Automated weekly run of `uv lock --upgrade`.
+
+            CI runs against this PR; merging triggers the normal release
+            pipeline as if this were a hand-authored PR.
+          delete-branch: true

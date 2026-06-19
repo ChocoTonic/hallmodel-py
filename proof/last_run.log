@@ -1,12 +1,26 @@
 ----- hallmodel-py parity verification -----
-date:          2026-06-19T18:11:10Z
-host:          Darwin 25.4.0 arm64
-python:        Python 3.14.4
+date:               2026-06-19T19:46:18Z
+host:               Darwin 25.4.0 arm64
+uv:                 uv 0.9.7 (0adb44480 2025-10-30)
 core submodule sha: 535788ce348971602759b8095b6ebf319662a4e6
-repo:          /Users/asdf/repos/hallmodel-py
+repo:               /Users/asdf/repos/hallmodel-py
 
------ installing bw_cpp -----
-WARNING: Cache entry deserialization failed, entry ignored
+----- syncing deps + building extension -----
+Using CPython 3.14.0
+Creating virtual environment at: .venv
+Resolved 13 packages in 4ms
+   Building hallmodel @ file:///Users/asdf/repos/hallmodel-py
+      Built hallmodel @ file:///Users/asdf/repos/hallmodel-py
+Prepared 3 packages in 5.51s
+Installed 8 packages in 44ms
+ + hallmodel==0.0.0 (from file:///Users/asdf/repos/hallmodel-py)
+ + iniconfig==2.3.0
+ + numpy==2.4.6
+ + packaging==26.2
+ + pluggy==1.6.0
+ + pybind11==3.0.4
+ + pygments==2.20.0
+ + pytest==9.1.1
 
 ----- driving cases through bw_cpp -----
   adult_male_baseline
