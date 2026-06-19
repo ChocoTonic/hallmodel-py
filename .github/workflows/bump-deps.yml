@@ -26,7 +26,7 @@ jobs:
       - name: uv lock --upgrade
         run: uv lock --upgrade
       - name: Open PR if lockfile changed
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: bump/deps
           title: "deps: weekly uv lock --upgrade"
