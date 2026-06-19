@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68", "pybind11>=2.11", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hallmodel"
+version = "0.1.0"
+description = "Python interface to the Hall body-weight dynamics models, backed by the hallmodel-core C++ kernel."
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[tool.setuptools]
+packages = ["bw_cpp"]

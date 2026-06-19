@@ -1,0 +1,55 @@
+----- hallmodel-py parity verification -----
+date:          2026-06-19T18:11:10Z
+host:          Darwin 25.4.0 arm64
+python:        Python 3.14.4
+core submodule sha: 535788ce348971602759b8095b6ebf319662a4e6
+repo:          /Users/asdf/repos/hallmodel-py
+
+----- installing bw_cpp -----
+WARNING: Cache entry deserialization failed, entry ignored
+
+----- driving cases through bw_cpp -----
+  adult_male_baseline
+  adult_male_ei2400
+  adult_female_baseline
+  adult_male_deficit
+  adult_multi
+  adult_male_pal_high
+  adult_female_pcarb
+  adult_male_dt_half
+  child_male_365d
+  child_female_730d
+  child_male_5yr
+  child_multi
+  child_male_dt_half
+  energy_linear
+  energy_exponential
+  energy_logarithmic
+  energy_stepwise_l
+  energy_stepwise_r
+
+----- comparing against contract/golden -----
+NOTE: skipping output key(s) ['BMI_Category'] in every case (--skip)
+
+PASS adult_female_baseline
+PASS adult_female_pcarb
+PASS adult_male_baseline
+PASS adult_male_deficit
+PASS adult_male_dt_half
+PASS adult_male_ei2400
+PASS adult_male_pal_high
+PASS adult_multi
+PASS child_female_730d
+PASS child_male_365d
+PASS child_male_5yr
+PASS child_male_dt_half
+PASS child_multi
+PASS energy_exponential
+PASS energy_linear
+PASS energy_logarithmic
+PASS energy_stepwise_l
+PASS energy_stepwise_r
+
+PARITY OK — all 18 cases within tolerance
+
+PASS: parity holds.

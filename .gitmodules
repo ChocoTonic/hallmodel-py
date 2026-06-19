@@ -1,0 +1,3 @@
+[submodule "external/hallmodel-core"]
+	path = external/hallmodel-core
+	url = /Users/asdf/repos/hallmodel-core

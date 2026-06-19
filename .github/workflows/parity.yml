@@ -1,0 +1,30 @@
+name: parity
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+          python3 -m pip install --upgrade pip pybind11 numpy pytest
+      - name: Run parity verification
+        run: ./proof/verify.sh
+      - name: Diff outputs against committed proof
+        run: |
+          git diff --exit-code proof/outputs/ \
+            || (echo "proof/outputs is stale — re-run ./proof/verify.sh and commit" && exit 1)
+      - name: Run pytest
+        run: python3 -m pytest tests/ -v
