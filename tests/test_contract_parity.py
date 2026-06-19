@@ -68,7 +68,8 @@ def test_contract_parity(tmp_path):
     # documented in hallmodel-core's proof/verify.sh.
     result = subprocess.run(
         [sys.executable, str(COMPARE_PY), str(out_dir),
-         "--golden", str(GOLDEN_DIR), "--skip", "BMI_Category"],
+         "--golden", str(GOLDEN_DIR),
+         "--skip", "BMI_Category,Total_Expenditure"],
         capture_output=True, text=True,
     )
     sys.stdout.write(result.stdout)

@@ -94,6 +94,7 @@ static py::dict adult_result(const bw::AdultResult& res) {
     d["Body_Mass_Index"]        = from_mat(res.Body_Mass_Index);
     d["BMI_Category"]           = cat;
     d["Energy_Intake"]          = from_mat(res.Energy_Intake);
+    d["Total_Expenditure"]      = from_mat(res.Total_Expenditure);
     d["Correct_Values"]         = res.Correct_Values;
     d["Model_Type"]             = res.Model_Type;
     return d;

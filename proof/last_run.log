@@ -1,26 +1,13 @@
 ----- hallmodel-py parity verification -----
-date:               2026-06-19T19:46:18Z
+date:               2026-06-19T22:35:59Z
 host:               Darwin 25.4.0 arm64
 uv:                 uv 0.9.7 (0adb44480 2025-10-30)
-core submodule sha: 535788ce348971602759b8095b6ebf319662a4e6
+core submodule sha: 99b7f9c1118687e8941e040fdb851b75c3c4c47e
 repo:               /Users/asdf/repos/hallmodel-py
 
 ----- syncing deps + building extension -----
-Using CPython 3.14.0
-Creating virtual environment at: .venv
-Resolved 13 packages in 4ms
-   Building hallmodel @ file:///Users/asdf/repos/hallmodel-py
-      Built hallmodel @ file:///Users/asdf/repos/hallmodel-py
-Prepared 3 packages in 5.51s
-Installed 8 packages in 44ms
- + hallmodel==0.0.0 (from file:///Users/asdf/repos/hallmodel-py)
- + iniconfig==2.3.0
- + numpy==2.4.6
- + packaging==26.2
- + pluggy==1.6.0
- + pybind11==3.0.4
- + pygments==2.20.0
- + pytest==9.1.1
+Resolved 13 packages in 3ms
+Audited 8 packages in 0.28ms
 
 ----- driving cases through bw_cpp -----
   adult_male_baseline
@@ -43,7 +30,7 @@ Installed 8 packages in 44ms
   energy_stepwise_r
 
 ----- comparing against contract/golden -----
-NOTE: skipping output key(s) ['BMI_Category'] in every case (--skip)
+NOTE: skipping output key(s) ['BMI_Category', 'Total_Expenditure'] in every case (--skip)
 
 PASS adult_female_baseline
 PASS adult_female_pcarb

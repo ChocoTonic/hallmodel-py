@@ -76,11 +76,13 @@ PY
 
   echo
   echo "----- comparing against contract/golden -----"
-  # Same --skip BMI_Category exclusion as hallmodel-core/proof/verify.sh — see
-  # that file for the upstream-coercion-artifact explanation.
+  # Same --skip set as hallmodel-core/proof/verify.sh:
+  #   BMI_Category      — upstream as.numeric(character_matrix) coercion artifact
+  #   Total_Expenditure — additive output not in upstream golden (validated by
+  #                       tests/test_total_expenditure.py closed-form check)
   uv run python "$CORE/contract/compare.py" "$OUT_DIR" \
       --golden "$CORE/contract/golden" \
-      --skip BMI_Category
+      --skip BMI_Category,Total_Expenditure
   echo
   echo "PASS: parity holds."
 } 2>&1 | tee "$LOG"
