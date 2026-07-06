@@ -31,7 +31,7 @@ jobs:
     needs: compute-version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
       - uses: actions/setup-python@v6
@@ -49,7 +49,7 @@ jobs:
           "
       - run: pip install build
       - run: python -m build --sdist
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: sdist
           path: dist/*.tar.gz
@@ -65,7 +65,7 @@ jobs:
           - { os: macos-14,      name: macos-arm64 }
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
       - name: Rewrite version in pyproject.toml
@@ -79,8 +79,8 @@ jobs:
           open(p, 'w').write(src)
           "
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.2
-      - uses: actions/upload-artifact@v5
+        uses: pypa/cibuildwheel@v4.1
+      - uses: actions/upload-artifact@v7
         with:
           name: wheels-${{ matrix.name }}
           path: wheelhouse/*.whl
@@ -93,7 +93,7 @@ jobs:
     permissions:
       id-token: write   # required for PyPI Trusted Publisher (OIDC)
     steps:
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
